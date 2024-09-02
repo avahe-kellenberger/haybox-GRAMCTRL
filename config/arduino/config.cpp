@@ -87,7 +87,7 @@ void setup() {
 
     // Default to Melee mode.
     primary_backend->SetGameMode(
-        new Melee20Button(socd::SOCD_2IP_NO_REAC, { .crouch_walk_os = false })
+        new Melee21Button(socd::SOCD_2IP_NO_REAC, { .crouch_walk_os = false })
     );
 }
 

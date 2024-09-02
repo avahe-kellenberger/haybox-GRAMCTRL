@@ -13,7 +13,7 @@
 #include "core/state.hpp"
 #include "input/SwitchMatrixInput.hpp"
 #include "joybus_utils.hpp"
-#include "modes/Melee20Button.hpp"
+#include "modes/Melee21Button.hpp"
 #include "stdlib.hpp"
 
 #include <pico/bootrom.h>
@@ -114,7 +114,7 @@ void setup() {
 
     // Default to Melee mode.
     primary_backend->SetGameMode(
-        new Melee20Button(socd::SOCD_2IP_NO_REAC, { .crouch_walk_os = false })
+        new Melee21Button(socd::SOCD_2IP_NO_REAC, { .crouch_walk_os = false })
     );
 }
 
