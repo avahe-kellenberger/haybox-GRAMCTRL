@@ -6,12 +6,13 @@
 #define ANALOG_STICK_MAX 228
 
 Ultimate::Ultimate(socd::SocdType socd_type) {
-    _socd_pair_count = 4;
+    _socd_pair_count = 5;
     _socd_pairs = new socd::SocdPair[_socd_pair_count]{
-        socd::SocdPair{ &InputState::left,    &InputState::right,  socd_type},
-        socd::SocdPair{ &InputState::down,   &InputState::up,      socd_type},
-        socd::SocdPair{ &InputState::c_left, &InputState::c_right, socd_type},
-        socd::SocdPair{ &InputState::c_down, &InputState::c_up,    socd_type},
+        socd::SocdPair{ &InputState::left,    &InputState::right,   socd_type},
+        socd::SocdPair{ &InputState::down,    &InputState::up,      socd_type},
+        socd::SocdPair{ &InputState::down,    &InputState::up2,     socd_type},
+        socd::SocdPair{ &InputState::c_left,  &InputState::c_right, socd_type},
+        socd::SocdPair{ &InputState::c_down,  &InputState::c_up,    socd_type},
     };
 }
 
@@ -29,7 +30,7 @@ void Ultimate::UpdateDigitalOutputs(InputState &inputs, OutputState &outputs) {
     outputs.home = inputs.home;
 
     // Turn on D-Pad layer by holding Mod X + Mod Y or Nunchuk C button.
-    if ((inputs.mod_x && inputs.mod_y) || inputs.up2) {
+    if (inputs.mod_x && inputs.mod_y) {
         outputs.dpadUp = inputs.c_up;
         outputs.dpadDown = inputs.c_down;
         outputs.dpadLeft = inputs.c_left;
@@ -43,7 +44,7 @@ void Ultimate::UpdateAnalogOutputs(InputState &inputs, OutputState &outputs) {
         inputs.left,
         inputs.right,
         inputs.down,
-        inputs.up,
+        inputs.up || inputs.up2,
         inputs.c_left,
         inputs.c_right,
         inputs.c_down,
@@ -243,7 +244,7 @@ void Ultimate::UpdateAnalogOutputs(InputState &inputs, OutputState &outputs) {
     }
 
     // Shut off C-stick when using D-Pad layer.
-    if ((inputs.mod_x && inputs.mod_y) || inputs.up2) {
+    if (inputs.mod_x && inputs.mod_y) {
         outputs.rightStickX = ANALOG_STICK_NEUTRAL;
         outputs.rightStickY = ANALOG_STICK_NEUTRAL;
 
