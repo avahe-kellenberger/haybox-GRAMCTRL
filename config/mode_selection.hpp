@@ -44,7 +44,7 @@ void select_mode(CommunicationBackend *backend) {
             set_mode(
                 backend,
                 new ProjectM(
-                    socd::SOCD_2IP_NO_REAC,
+                    socd::SOCD_2IP,
                     { .true_z_press = false, .ledgedash_max_jump_traj = true }
                 )
             );
